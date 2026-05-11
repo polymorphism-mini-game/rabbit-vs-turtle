@@ -12,7 +12,11 @@ public abstract class Animal {
     }
 
     public int getPosition() {
-        return 0;
+        return position;
+    }
+
+    public void addPosition(int moveCount){
+        position += moveCount;
     }
 
 }
