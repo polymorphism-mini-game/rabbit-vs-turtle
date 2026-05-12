@@ -41,8 +41,16 @@ public abstract class Animal {
         this.hasShield = hasShield;
     }
 
-    public int move() {
+    public int move(){
         return 0;
+    }
+
+    public int moveStep(int amount) {
+       position += amount;
+       if(position < 0){
+           position = 0;
+       }
+       return position;
     }
 
     public int getPosition() {
