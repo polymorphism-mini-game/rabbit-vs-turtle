@@ -11,9 +11,4 @@ public class Rabbit extends Animal {
     public int move() {
         return 3;
     }
-
-    public int Booster(){
-        return position += 3;
-    }
-
 }
