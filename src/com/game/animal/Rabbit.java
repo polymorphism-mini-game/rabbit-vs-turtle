@@ -2,11 +2,14 @@ package com.game.animal;
 
 public class Rabbit extends Animal {
 
-    public Rabbit() {}
+    public Rabbit() {
+        super();
+        this.name = "🐰토끼";
+    }
 
     @Override
     public int move() {
-        return position += 3;
+        return 3;
     }
 
     public int Booster(){
