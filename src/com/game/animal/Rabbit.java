@@ -1,6 +1,10 @@
 package com.game.animal;
 
+import java.util.Random;
+
 public class Rabbit extends Animal {
+
+    private final Random random = new Random();
 
     public Rabbit() {
         super();
@@ -9,6 +13,6 @@ public class Rabbit extends Animal {
 
     @Override
     public int move() {
-        return 3;
+        return random.nextInt(5) + 1;
     }
 }
