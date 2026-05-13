@@ -1,6 +1,10 @@
 package com.game.animal;
 
+import java.util.Random;
+
 public class Turtle extends Animal {
+
+    private final Random random = new Random();
 
     public Turtle() {
         super();
@@ -9,7 +13,7 @@ public class Turtle extends Animal {
 
     @Override
     public int move() {
-        return 1;
+        return random.nextInt(3) + 1;
     }
 
 }

@@ -6,6 +6,8 @@ import com.game.animal.Turtle;
 import com.game.item.Item;
 import com.game.item.ItemFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,6 +15,7 @@ public class RaceGame {
 
     private final Animal[] animals;
     private final int goal;
+    private boolean isFinished;
 
     private final Random random = new Random();
     private final ItemFactory itemFactory = new ItemFactory();
@@ -22,6 +25,7 @@ public class RaceGame {
 
     public RaceGame() {
         this.goal = 20;
+        this.isFinished = false;
 
         animals = new Animal[] {
                 new Rabbit(),
@@ -34,7 +38,7 @@ public class RaceGame {
         int round = 1;
         raceStartMessage();
 
-        while(true) {
+        while(!isFinished) {
 
             printRound(round);
 
@@ -42,13 +46,7 @@ public class RaceGame {
 
             printCurrentPosition();
 
-            Animal winner = checkWinner();
-
-            if(winner != null) {
-                printWinner(winner);
-                break;
-            }
-            waitNextRound();
+            checkWinner();
 
             round++;
         }
@@ -77,10 +75,9 @@ public class RaceGame {
     private void triggerItemEvent() {
 
         int chance = random.nextInt(100);
-        System.out.println("chance = " + chance);
 
-        // 30% 확률
-        if(chance < 30) {
+        // 50% 확률
+        if(chance < 50) {
             System.out.println("🎁 랜덤 이벤트 발생!");
 
             // 랜덤 동물 선택
@@ -88,24 +85,43 @@ public class RaceGame {
 
             // 랜덤 아이템 생성
             Item item = itemFactory.createRandomItem();
-
-//            System.out.println("target : " + target.getName());
-//            System.out.println(item);
-
             item.run(target);
         }
     }
 
-    private Animal checkWinner() {
+    private void checkWinner() {
+
+        List<Animal> winners = new ArrayList<>();
 
         for(Animal animal : animals) {
-
             if(animal.getPosition() >= goal) {
-                return animal;
+                winners.add(animal);
             }
         }
 
-        return null;
+        // 우승자 존재
+        if(!winners.isEmpty()) {
+
+            isFinished = true;
+
+            System.out.println();
+            System.out.println("🏆 경기 종료!");
+
+            // 공동 우승
+            if(winners.size() > 1) {
+                System.out.println("공동 우승!");
+
+            } else {
+                System.out.println("우승자!");
+            }
+
+            for(Animal winner : winners) {
+                System.out.println(
+                        winner.getName()
+                );
+            }
+        }
+        waitNextRound();
     }
 
     private void printRound(int round) {
@@ -124,19 +140,6 @@ public class RaceGame {
         }
 
         System.out.println();
-    }
-
-    private void printWinner(Animal winner) {
-        System.out.println();
-        System.out.println("=================================");
-        System.out.println("🏆 우승 동물 등장! 🏆");
-        System.out.println("=================================");
-        System.out.println();
-
-        System.out.println(winner.getName() + "가(이) 가장 먼저 도착했습니다!");
-
-        System.out.println();
-        System.out.println("🎉 축하합니다! 🎉");
     }
 
     private void raceStartMessage() {
