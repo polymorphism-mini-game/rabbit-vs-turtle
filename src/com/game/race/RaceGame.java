@@ -89,8 +89,8 @@ public class RaceGame {
             // 랜덤 아이템 생성
             Item item = itemFactory.createRandomItem();
 
-            System.out.println("target : " + target.getName());
-            System.out.println(item);
+//            System.out.println("target : " + target.getName());
+//            System.out.println(item);
 
             item.run(target);
         }
